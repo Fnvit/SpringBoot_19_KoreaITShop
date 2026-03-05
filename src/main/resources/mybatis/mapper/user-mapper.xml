@@ -1,0 +1,31 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.security.mapper.UserMapper">
+
+    <select id="selectUserById" resultType="com.example.security.dto.UserDTO">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+    <insert id="insertUser">
+        INSERT INTO user (id, password, nickname, phone, email, register_date)
+        VALUES (#{id}, #{password}, #{nickname}, #{phone}, #{email}, CURDATE())
+    </insert>
+
+
+    <select id="selectUserBySNSId" resultType="com.example.security.dto.UserDTO">
+        SELECT USER.* FROM sns_user SNS
+            INNER JOIN user USER
+            ON USER.id = SNS.user_id
+        WHERE SNS.sns_id = #{id}
+    </select>
+
+    <select id="selectSNSUsersByUserId" resultType="java.util.Map">
+        SELECT * FROM sns_user WHERE user_id = #{id}
+    </select>
+
+    <insert id="insertSNSUser">
+        INSERT INTO sns_user (sns_id, user_id, client_name, linked_date)
+        VALUES (#{snsId}, #{userId}, #{clientName}, NOW())
+    </insert>
+</mapper>

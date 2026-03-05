@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>마이페이지 | 내정보</title>
+</head>
+<body>
+    <h1>회원정보 페이지</h1>
+    <b th:text="${#authentication.principal}"></b>
+    <section>
+        <header th:text="${#authentication.principal.id} + '님의 회원 정보'">?님의 회원 정보</header>
+        <form>
+            <div>
+                <label>
+                    <b>비밀번호</b>
+                    <input type="text" name="password">
+                </label>
+            </div>
+            <div>
+                <label>
+                    <b>닉네임(선택)</b>
+                    <input type="text" name="nickname" th:value="${#authentication.principal.nickname}">
+                </label>
+            </div>
+            <div class="nav_container">
+                <input type="submit" value="회원정보 수정">
+            </div>
+        </form>
+    </section>
+
+    <section>
+        <header>SNS 연동</header>
+        <div>
+            <a href="/oauth2/authorization/naver">
+                <img src="../../../static/image/naver_login_light.png" width="200" alt="네이버로그인버튼"/>
+            </a>
+            <div>
+                <b>연동날짜:</b><span>00:--:--</span>
+            </div>
+        </div>
+        <div>
+            <a href="/oauth2/authorization/google">
+                <img src="../../../static/image/google_login_light.png" width="200" alt="구글로그인버튼"/>
+            </a>
+        </div>
+    </section>
+</body>
+</html>
