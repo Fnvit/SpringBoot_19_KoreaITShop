@@ -1,8 +1,5 @@
 package shop.koreait.configuration;
 
-import com.example.security.handler.CustomOAuth2FailureHandler;
-import com.example.security.handler.CustomOAuth2SuccessHandler;
-import com.example.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import shop.koreait.handler.CustomOAuth2FailureHandler;
+import shop.koreait.handler.CustomOAuth2SuccessHandler;
+import shop.koreait.service.CustomUserDetailsService;
 
 import javax.sql.DataSource;
 

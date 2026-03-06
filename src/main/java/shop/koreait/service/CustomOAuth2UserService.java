@@ -1,8 +1,5 @@
 package shop.koreait.service;
 
-import com.example.security.dto.SNSUserDTO;
-import com.example.security.dto.UserDTO;
-import com.example.security.mapper.UserMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,6 +10,9 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.OAuth2ErrorCodes;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import shop.koreait.dto.SNSUserDTO;
+import shop.koreait.dto.UserDTO;
+import shop.koreait.mapper.UserMapper;
 
 import java.util.Map;
 

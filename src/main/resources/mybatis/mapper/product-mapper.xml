@@ -1,0 +1,13 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shop.koreait.mapper.ProductMapper">
+    <select id="selectProducts" resultType="ProductDTO">
+        SELECT * FROM product
+    </select>
+
+    <select id="selectProductByNo" resultType="ProductDTO">
+        SELECT * FROM product
+        WHERE no = #{no}
+    </select>
+</mapper>

@@ -1,15 +1,16 @@
 package shop.koreait.service;
 
-import com.example.security.dto.UserDTO;
-import com.example.security.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import shop.koreait.dto.UserDTO;
+import shop.koreait.mapper.UserMapper;
 
 @Service
 public class UserService {
     @Autowired PasswordEncoder passwordEncoder;
-    @Autowired UserMapper userMapper;
+    @Autowired
+    UserMapper userMapper;
 
     /**
      * DB에 id와 pw를 전달해서 일치하는 유저가 존재하는지 검사하는 메서드

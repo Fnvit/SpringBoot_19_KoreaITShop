@@ -1,9 +1,9 @@
 package shop.koreait.mapper;
 
-import com.example.security.dto.SNSUserDTO;
-import com.example.security.dto.UserDTO;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
+import shop.koreait.dto.SNSUserDTO;
+import shop.koreait.dto.UserDTO;
 
 import java.util.Map;
 

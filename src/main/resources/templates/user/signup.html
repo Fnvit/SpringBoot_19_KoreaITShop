@@ -1,155 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>회원가입</title>
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <title>회원등록 | KOREA STORE</title>
+    <link rel="stylesheet" href="../../static/css/user/signup.css">
 </head>
 <body>
-    <h1>회원가입 페이지</h1>
-    <fieldset>
-        <legend>사용자 정보 입력</legend>
-        <form action="/user/signup" method="post">
-            <div>
-                <label>
-                    <b>아이디</b>
-                    <input type="text" name="id">
-                    <button type="button" id="id_check_button">중복검사</button>
-                </label>
-            </div>
-            <div>
-                <label>
-                    <b>비밀번호</b>
-                    <input type="text" name="password">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <b>휴대폰</b>
-                    <input type="text" name="phone" placeholder="010-1234-5678">
-                    <input type="hidden" name="impUID">
-                    <button type="button" id="phone_check_button">휴대폰 인증</button>
-                </label>
-            </div>
-            <div>
-                <label>
-                    <b>이메일</b>
-                    <input type="text" name="email">
-                </label>
-            </div>
-            <div>
-                <label>
-                    <b>닉네임(선택)</b>
-                    <input type="text" name="nickname">
-                </label>
-            </div>
-            <div class="nav_container">
-                <input type="submit" value="회원가입">
-                <input type="button" value="돌아가기">
-            </div>
+    <main>
+        <h1>회원등록</h1>
+        <form method="post">
+            <h2>필수정보</h2>
+            <section>
+                <div class="id-input-container">
+                    <i class="bi bi-person-fill"></i>
+                    <label>
+                        <input type="text" id="id" name="id" placeholder="아이디를 입력하세요 (4~15자, 영문자로 시작, 영문자+숫자)">
+                    </label>
+                    <button type="button">중복검사</button>
+                    <input type="hidden" name="id-check">
+                    <input type="hidden" name="id-check-valid" value="false">
+                </div>
+                <div class="error-container">
+                    <span>아이디 형식이 잘못되었습니다</span>
+                </div>
+
+                <div class="pw-input-container">
+                    <i class="bi bi-lock-fill"></i>
+                    <label><input type="text" id="password" name="password" placeholder="비밀번호를 입력하세요 (4-10자 이내, 영문자+숫자+특수문자 조합)"></label>
+                </div>
+
+                <div class="pw-re-input-container">
+                    <i class="bi bi-lock-fill"></i>
+                    <label><input type="text" id="password-re" placeholder="비밀번호를 한번 더 입력하세요"></label>
+                </div>
+                <div class="error-container">
+                    <span>비밀번호 형식이 잘못되었습니다</span>
+                </div>
+
+                <div class="tel-input-container">
+                    <i class="bi bi-telephone-fill"></i>
+                    <label class="tel-head-label">
+                        <select name="tel">
+                            <option>010</option>
+                            <option>011</option>
+                            <option>017</option>
+                            <option>018</option>
+                        </select>
+                    </label>
+                    <span>-</span>
+                    <label><input type="text" name="tel"></label>
+                    <span>-</span>
+                    <label><input type="text" name="tel"></label>
+                    <button type="button">인증하기</button>
+                </div>
+                <div class="error-container">
+                    <span>전화번호 형식이 잘못되었습니다</span>
+                </div>
+
+                <div class="email-input-container">
+                    <i class="bi bi-envelope-fill"></i>
+                    <label><input type="text" name="email"></label>
+                    <i class="bi bi-at"></i>
+                    <label><input type="text" name="email"></label>
+                    <label class="email-tail-label">
+                        <select>
+                            <option selected>직접입력</option>
+                            <option>naver.com</option>
+                            <option>google.com</option>
+                            <option>nate.com</option>
+                        </select>
+                    </label>
+                    <button type="button">인증하기</button>
+                </div>
+                <div class="error-container">
+                    <span>이메일 형식이 잘못되었습니다</span>
+                </div>
+
+                <div class="email-auth-input-container">
+                    <label><input type="text" placeholder="인증번호를 입력하세요"></label>
+                    <button type="button">확인</button>
+                </div>
+            </section>
+
+            <h2>선택정보</h2>
+            <section>
+                <div class="nickname-input-container">
+                    <i class="bi bi-highlighter"></i>
+                    <label><input type="text" name="nickname" placeholder="닉네임을 입력하세요"></label>
+                </div>
+                <div class="image-input-container">
+                    <i class="bi bi-image"></i>
+                    <label><input type="file"></label>
+                </div>
+            </section>
+
+            <section class="join-btn-section">
+                <button type="submit">가입하기</button>
+                <button type="button">돌아가기</button>
+            </section>
         </form>
-    </fieldset>
+
+
+
+    </main>
 </body>
 </html>
-<script>
-    const signupForm = document.forms[0]; // 회원가입 폼
-    const idInput = document.getElementsByName('id')[0]; // id input
-    const idCheckButton = document.querySelector('#id_check_button'); // 아이디 중복검사 버튼
-    const phoneInput = document.getElementsByName('phone')[0]; // id input
-    const impUIDInput = document.getElementsByName('impUID')[0]; // impUID input
-    const phoneCheckButton = document.querySelector('#phone_check_button'); // 휴대폰 본인인증 버튼
-    const submitButton = document.querySelector('.nav_container > input[type=submit]'); // 회원가입버튼
-    const backButton = document.querySelector('.nav_container > input[type=button]'); // 돌아가기버튼
-    let isIdChecked = false; // 아이디 중복검사를 시행했는가?를 나타내는 변수
-    let checkedId = ''; // 중복검사 완료한 아이디를 저장하는 변수
-
-    let isUIDChecked = false; // 휴대폰 인증을 시행했는가?를 나타내는 변수
-    let checkedImpUID = ''; // 휴대폰 인증 완료된 impuid
-    let checkedPhone = ''; // 휴대폰 인증 완료된 휴대폰번호
-
-    IMP.init("imp34343376");
-
-    // 휴대폰 본인인증 버튼을 클릭하면
-    phoneCheckButton.onclick = () => {
-        const phone = phoneInput.value.trim();
-        if(phone === ''){
-            alert('휴대폰 번호를 작성해주세요!');
-            return;
-        }
-        IMP.certification({
-                channelKey: "channel-key-ba8b47f3-dc56-45c5-a0a7-ec230d409ec1"
-            },
-            function (response) {
-                console.log(response);
-                if (response.success) {
-                    checkedPhone = phone;
-                    isUIDChecked = true;
-                    checkedImpUID = response["imp_uid"];
-                    // 인증완료된 UID 값 넣어주기
-                    impUIDInput.value = checkedImpUID;
-                    phoneInput.setAttribute('readonly', '');
-                    alert('인증이 완료되었습니다!');
-                } else {
-                    alert('인증에 실패했습니다!');
-                }
-            },
-        );
-    }
-    // 아이디 중복검사 버튼을 누르면
-    idCheckButton.onclick = () => {
-        isIdChecked = false; // 중복 검사 버튼은 무조건 false 기본으로.
-        const userId =  idInput.value;
-        if(userId === ''){
-            alert('아이디를 작성하세요')
-            return;
-        }
-        fetch(`/user/id/${userId}`)
-            .then(response => response.json())
-            .then(value => {
-                if(value){
-                    alert('해당 아이디는 사용가능합니다!');
-                    isIdChecked = true; // id 체크 끝
-                    checkedId = userId; // id 체크가 완료된 id를 저장
-                }else{
-                    alert('해당 아이디는 이미 사용중입니다!');
-                }
-            });
-    }
-    // 뒤로가기 버튼을 누르면
-    backButton.onclick = () => {
-        location.href = '/user/login';
-    }
-    // 회원가입 폼에서 submit 실행되었다면
-    signupForm.onsubmit = (event) => {
-        event.preventDefault();
-        const userId = idInput.value.trim();
-        const phone = phoneInput.value.trim();
-        // id 중복검사를 통과못했다면
-        if(!(isIdChecked && (checkedId === userId))){
-            alert('ID 중복검사를 진행해주세요');
-            return;
-        }
-        // phone 본인인증을 하지 않았다면
-        if(!(isUIDChecked && (checkedImpUID !== '') && (phone === checkedPhone))){
-            alert('휴대폰 본인인증을 진행해주세요');
-            return;
-        }
-
-        // 전부 통과했다면
-        signupForm.submit(); // 실제로 post 요청을 보낸다.
-    }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
