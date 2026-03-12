@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <meta charset="UTF-8">
     <title>카테고리 | KOREA STORE</title>
     <link rel="stylesheet" href="../../static/css/product/list.css">
+    <script src="../../static/js/product/list.js" defer></script>
 </head>
 <body>
     <main>
@@ -31,22 +34,29 @@
                     <label>
                         <span>보기설정</span>
                         <select id="view-size-select">
+                            <option value="2">2개</option>
+                            <option value="3">3개</option>
+                            <option value="5">5개</option>
                             <option value="10">10개</option>
-                            <option value="25">25개</option>
-                            <option value="30">30개</option>
-                            <option value="50">50개</option>
                         </select>
                     </label>
                 </li>
             </ul>
         </header>
         <section>
-            <div class="item">
-                <a class="image-container">
-                    <img src="https://jp.cookierunstore.com/web/product/medium/202312/27a96ac44b5d30888302cb8673663719.jpg" alt="">
+            <div class="item" th:each="product : ${pagination.elements}">
+                <a class="image-container" th:href="@{|/product/detail/${product.no}|}">
+                    <img th:src="@{|/file/product/image/${product.images[0].originalFileName}|}" src="https://jp.cookierunstore.com/web/product/medium/202312/27a96ac44b5d30888302cb8673663719.jpg" alt="">
                 </a>
-                <b class="title">クッキーラン霊魂石キーホルダー第4弾</b>
-                <b class="price">1,192원</b>
+                <b class="rating">
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i>
+                </b>
+                <b class="title" th:text="${product.name}">クッキーラン霊魂石キーホルダー第4弾</b>
+                <b class="price" th:text="${product.price}">1,192원</b>
             </div>
         </section>
         <ol>
@@ -55,8 +65,8 @@
                     <i class="bi bi-caret-left-fill"></i>
                 </a>
             </li>
-            <li>
-                <a>1</a>
+            <li th:if="${pagination.startPage <= pagination.endPage}" th:each="page : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+                <a th:text="${page}">1</a>
             </li>
             <li>
                 <a>

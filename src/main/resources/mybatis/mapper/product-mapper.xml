@@ -2,12 +2,83 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="shop.koreait.mapper.ProductMapper">
+    <resultMap id="productWithImageAndCategoryAndOption" type="ProductDTO" autoMapping="true">
+        <id property="no" column="p_no" />
+        <association property="category" javaType="CategoryDTO">
+            <id property="no" column="c_no" />
+            <result property="name" column="c_name" />
+        </association>
+        <collection property="images" ofType="ProductImageDTO" javaType="list">
+            <id property="no" column="pi_no" />
+            <result property="originalFileName" column="original_filename" />
+        </collection>
+        <collection property="options" ofType="ProductOptionDTO" javaType="list">
+            <id property="no" column="po_no" />
+            <result property="name" column="po_name" />
+            <result property="price" column="po_price" />
+        </collection>
+    </resultMap>
+
     <select id="selectProducts" resultType="ProductDTO">
         SELECT * FROM product
     </select>
 
-    <select id="selectProductByNo" resultType="ProductDTO">
-        SELECT * FROM product
-        WHERE no = #{no}
+    <select id="selectPaginationProductCount" resultType="int">
+        SELECT COUNT(*) FROM `product`
+        WHERE category IN (
+            WITH RECURSIVE `category_cte` AS (
+                SELECT * FROM `category` WHERE no = #{category}
+                    UNION ALL
+                SELECT CHILD.* FROM category_cte PARENT
+                INNER JOIN category CHILD
+                ON PARENT.no = CHILD.parent_no
+            )
+            SELECT no FROM `category_cte` WHERE parent_no IS NOT NULL
+        )
     </select>
+
+    <select id="selectPaginationProducts" resultType="ProductDTO" resultMap="productWithImageAndCategoryAndOption">
+        SELECT
+            *
+        FROM
+            (
+                SELECT no AS p_no, name, price, rating FROM `product`
+                WHERE category IN (
+                    WITH RECURSIVE `category_cte` AS (
+                        SELECT * FROM `category` WHERE no = #{category}
+                            UNION ALL
+                        SELECT CHILD.* FROM category_cte PARENT
+                            INNER JOIN category CHILD
+                            ON PARENT.no = CHILD.parent_no
+                    )
+                    SELECT no FROM `category_cte` WHERE parent_no IS NOT NULL)
+                LIMIT #{size} OFFSET #{offset}
+            ) AS CP
+            INNER JOIN (
+                SELECT no AS pi_no, product_no, original_filename FROM product_image WHERE no IN (
+                SELECT min(no) FROM product_image
+                GROUP BY product_no
+            )) PI
+            ON CP.p_no = PI.product_no
+    </select>
+
+    <select id="selectProductByNo" resultType="ProductDTO" resultMap="productWithImageAndCategoryAndOption">
+        SELECT
+            P.*,
+            P.no p_no, P.name p_name, P.price p_price,
+            C.no c_no, C.name c_name,
+            PI.no pi_no, PI.original_filename,
+            PO.no po_no, PO.name po_name, PO.price po_price
+        FROM product P
+            INNER JOIN category C
+            ON C.no = P.category
+            INNER JOIN product_image PI
+            ON P.no = PI.product_no
+            LEFT OUTER JOIN product_option PO
+            ON P.no = PO.product_no
+        WHERE P.no = #{no}
+    </select>
+
+
+
 </mapper>
